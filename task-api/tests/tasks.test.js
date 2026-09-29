@@ -7,6 +7,15 @@ describe('Tasks API Integration Tests', () => {
     taskService._reset();
   });
 
+  describe('GET /', () => {
+    test('returns health status and available endpoints', async () => {
+      const response = await request(app).get('/');
+      expect(response.status).toBe(200);
+      expect(response.body.status).toBe('online');
+      expect(response.body.endpoints).toHaveProperty('tasks');
+    });
+  });
+
   describe('POST /tasks', () => {
     test('creates a task with required fields (happy path)', async () => {
       const response = await request(app)
